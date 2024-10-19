@@ -85,3 +85,37 @@ ON DELETE CASCADE,
 ADD CONSTRAINT fk_publisher
 FOREIGN KEY (publisher_id) REFERENCES publishers(publisher_id)
 ON DELETE CASCADE;
+
+
+// Ejemplo de One-To-One relationship
+
+
+CREATE TABLE students (
+  student_id INT PRIMARY KEY,
+  student_name VARCHAR(100)
+);
+
+CREATE TABLE student_id_cards (
+  card_id INT PRIMARY KEY,
+  student_id INT,
+  issue_date DATE,
+  FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
+);
+
+// En este ejemplo la relacion es one to one
+Cada student record is linked to one student id card record and each student id card record is linked to one student
+
+
+// Ejemplo de One-To-Many relationship
+
+CREATE TABLE mothers (
+    mother_id INT PRIMARY KEY,
+    mother_name VARCHAR(50)
+);
+
+CREATE TABLE childs (
+    child_id INT PRIMARY KEY,
+    child_name VARCHAR(50),
+    mother_id INT,
+    FOREIGN KEY (mother_id) REFERENCES mothers (mother_id) ON DELETE CASCADE 
+);
