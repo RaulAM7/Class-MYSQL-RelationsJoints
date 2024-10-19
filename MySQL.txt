@@ -119,3 +119,42 @@ CREATE TABLE childs (
     mother_id INT,
     FOREIGN KEY (mother_id) REFERENCES mothers (mother_id) ON DELETE CASCADE 
 );
+
+
+// Ejemeplo de Many-to-Many relationship
+
+author and books
+
+CREATE TABLE authors (
+  author_id INT PRIMARY KEY,
+  author_name VARCHAR(100)
+);
+
+INSERT INTO authors (author_id, author_name)
+VALUES (1, 'J.K. Rowling'),
+ (2, 'George Orwell')
+;
+CREATE TABLE books (
+    book_id INT PRIMARY KEY,
+    book_name VARCHAR(100)
+);
+
+INSERT INTO books (book_id, book_name)
+VALUES (1, 'Harry Potter'),
+(2, '1984')
+;
+
+
+CREATE TABLE authors_books (
+    author_id INT,
+    book_id INT,
+    PRIMARY KEY (author_id, book_id),
+    FOREIGN KEY (author_id) REFERENCES authors(author_id),
+    FOREIGN KEY (book_id) REFERENCES books(book_id)
+)
+;
+
+INSERT INTO authors_books (author_id, book_id)
+VALUES (1, 1),
+(2, 2)
+;
