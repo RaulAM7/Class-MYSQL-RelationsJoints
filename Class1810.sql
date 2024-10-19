@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS Class1810_Relations_Joints;
+USE Class1810_Relations_Joints;

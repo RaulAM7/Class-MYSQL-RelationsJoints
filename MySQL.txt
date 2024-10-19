@@ -1,0 +1,87 @@
+// 
+
+CREATE TABLE Authors (
+    AuthorID INT PRIMARY KEY,
+    Name VARCHAR(100)
+);
+
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY,
+    AuthorID INT,
+    Title VARCHAR(100),
+    FOREIGN KEY(AuthorID) REFERENCES Authors(AuthorID)
+);
+
+ALTER TABLE Books
+ADD COLUMN Book_name VARCHAR(100)
+;
+
+CREATE TABLE Publishers (
+    PublisherdID INT PRIMARY KEY,
+    Publisher_name VARCHAR(100),
+    BookID INT,
+    Book_name VARCHAR(100),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+);
+
+ALTER TABLE Publishers
+DROP COLUMN Book_name;
+
+DROP TABLE Authors;
+DROP TABLE Books;
+DROP TABLE Publishers;
+
+
+// Ejemplo para relaciones
+
+CREATE TABLE authors (
+  author_id INT PRIMARY KEY,
+  author_name VARCHAR(100)
+);
+
+CREATE TABLE publishers (
+  publisher_id INT PRIMARY KEY,
+  publisher_name VARCHAR(100)
+);
+
+// Ahora creamos una tabla hija que se llame Books_authors_publishers
+
+CREATE TABLE Books_authors_publishers (
+    bookID INT PRIMARY KEY,
+    book_name VARCHAR(100),
+    author_id INT,
+    publisher_id INT,
+    FOREIGN KEY (author_id) REFERENCES authors(author_id),
+    FOREIGN KEY (publisher_id) REFERENCES publishers(publisher_id)
+)
+;
+
+INSERT INTO authors (author_id, author_name)
+VALUES (1, 'J.K. Rowling'),
+ (2, 'George Orwell')
+;
+
+INSERT INTO publishers (publisher_id, publisher_name)
+VALUES (1, 'Bloomsbury'),
+ (2, 'Penguin Books')
+;
+
+INSERT INTO Books_authors_publishers (bookID, book_name, author_id, publisher_id)
+VALUES (1, 'Harry Potter', 1, 1),
+ (2, '1984', 2,2)
+;
+
+
+// Para añadir ON DELETE CASCADE una vez ya creada la FOREIGN KEY
+
+ALTER TABLE Books_authors_publishers
+DROP FOREIGN KEY Books_authors_publishers_ibfk_1,
+DROP FOREIGN KEY Books_authors_publishers_ibfk_2;
+
+ALTER TABLE Books_authors_publishers
+ADD CONSTRAINT fk_author
+FOREIGN KEY (author_id) REFERENCES authors(author_id)
+ON DELETE CASCADE,
+ADD CONSTRAINT fk_publisher
+FOREIGN KEY (publisher_id) REFERENCES publishers(publisher_id)
+ON DELETE CASCADE;
